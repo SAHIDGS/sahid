@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encriptación y Desencriptación</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Encriptar y Desencriptar Frase</h1>
+    <input type="text" id="inputText" placeholder="Introduce la frase a encriptar">
+    <button onclick="encrypt()">Encriptar</button>
+    <input type="text" id="encryptedText" placeholder="Texto encriptado" readonly>
+    <button onclick="decrypt()">Desencriptar</button>
+    <input type="text" id="decryptedText" placeholder="Texto desencriptado" readonly>
+
+    <script>
+        const shift = 3; // Desplazamiento para el cifrado César
+
+        function encrypt() {
+            const input = document.getElementById('inputText').value;
+            let encrypted = '';
+            for (let i = 0; i < input.length; i++) {
+                let char = input.charCodeAt(i);
+                // Encriptar solo letras mayúsculas y minúsculas
+                if (char >= 65 && char <= 90) {
+                    char = ((char - 65 + shift) % 26) + 65;
+                } else if (char >= 97 && char <= 122) {
+                    char = ((char - 97 + shift) % 26) + 97;
+                }
+                encrypted += String.fromCharCode(char);
+            }
+            document.getElementById('encryptedText').value = encrypted;
+        }
+
+        function decrypt() {
+            const input = document.getElementById('encryptedText').value;
+            let decrypted = '';
+            for (let i = 0; i < input.length; i++) {
+                let char = input.charCodeAt(i);
+                // Desencriptar solo letras mayúsculas y minúsculas
+                if (char >= 65 && char <= 90) {
+                    char = ((char - 65 - shift + 26) % 26) + 65;
+                } else if (char >= 97 && char <= 122) {
+                    char = ((char - 97 - shift + 26) % 26) + 97;
+                }
+                decrypted += String.fromCharCode(char);
+            }
+            document.getElementById('decryptedText').value = decrypted;
+        }
+    </script>
+</body>
+</html>
